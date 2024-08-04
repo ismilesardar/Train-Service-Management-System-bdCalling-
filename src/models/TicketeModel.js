@@ -19,6 +19,11 @@ const ticketSchema = new mongoose.Schema({
         trim: true,
         required: true,
     },
+    ticket_price: {
+        type: Number,
+        trim: true,
+        required: true,
+    },
     supervisor_name: {
         type: String,
         trim: true,
@@ -59,16 +64,16 @@ const ticketSchema = new mongoose.Schema({
         trim: true,
         required: true,
         default: [
-            'A-1','A-2','A-3','A-4',
-            'B-1','B-2','B-3','B-4',
-            'C-1','C-2','C-3','C-4',
-            'D-1','D-2','D-3','D-4',
-            'E-1','E-2','E-3','E-4',
-            'F-1','F-2','F-3','F-4',
-            'G-1','G-2','G-3','G-4',
-            'H-1','H-2','H-3','H-4',
-            'I-1','I-2','I-3','I-4',
-            'J-1','J-2','J-3','J-4',
+            'A-1', 'A-2', 'A-3', 'A-4',
+            'B-1', 'B-2', 'B-3', 'B-4',
+            'C-1', 'C-2', 'C-3', 'C-4',
+            'D-1', 'D-2', 'D-3', 'D-4',
+            'E-1', 'E-2', 'E-3', 'E-4',
+            'F-1', 'F-2', 'F-3', 'F-4',
+            'G-1', 'G-2', 'G-3', 'G-4',
+            'H-1', 'H-2', 'H-3', 'H-4',
+            'I-1', 'I-2', 'I-3', 'I-4',
+            'J-1', 'J-2', 'J-3', 'J-4',
         ]
     },
     booked_seat: {
@@ -82,19 +87,19 @@ const ticketSchema = new mongoose.Schema({
         trim: true,
         required: true,
         default: [
-            'A-1','A-2','A-3','A-4',
-            'B-1','B-2','B-3','B-4',
-            'C-1','C-2','C-3','C-4',
-            'D-1','D-2','D-3','D-4',
-            'E-1','E-2','E-3','E-4',
-            'F-1','F-2','F-3','F-4',
-            'G-1','G-2','G-3','G-4',
-            'H-1','H-2','H-3','H-4',
-            'I-1','I-2','I-3','I-4',
-            'J-1','J-2','J-3','J-4',
+            'A-1', 'A-2', 'A-3', 'A-4',
+            'B-1', 'B-2', 'B-3', 'B-4',
+            'C-1', 'C-2', 'C-3', 'C-4',
+            'D-1', 'D-2', 'D-3', 'D-4',
+            'E-1', 'E-2', 'E-3', 'E-4',
+            'F-1', 'F-2', 'F-3', 'F-4',
+            'G-1', 'G-2', 'G-3', 'G-4',
+            'H-1', 'H-2', 'H-3', 'H-4',
+            'I-1', 'I-2', 'I-3', 'I-4',
+            'J-1', 'J-2', 'J-3', 'J-4',
         ]
     },
-    
+
 }, {
     timestamps: true,
     versionKey: false

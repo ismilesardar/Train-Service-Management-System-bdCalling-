@@ -6,6 +6,8 @@
 
 const tickets = require("../models/TicketeModel");
 const banks = require("../models/MoneyReceiveModel");
+const bookings = require("../models/BookingModel");
+const wallets = require("../models/WalletModel");
 
 exports.TripCreate = async (req, res) => {
     try {
@@ -177,6 +179,92 @@ exports.CalculatingFares = async (req, res) => {
         // station data send as a response
         if (totalFund) {
             res.status(200).json(totalFund);
+        }
+
+
+    } catch (error) {
+        return res.status(400).json({
+            message: "something went worn!",
+        });
+    }
+}
+
+exports.PurchasingTicket = async (req, res) => {
+    try {
+        const { ticketId, userID } = req.params;
+        const {
+            passenger_name,
+            seat_number,
+            passenger_phone,
+            passenger_email,
+            pickup_location,
+            drop_location
+        } = req.body;
+
+        // check All fields
+        if (!passenger_name.trim() || !seat_number.trim() || !passenger_phone.trim() || !passenger_email.trim() || !pickup_location.trim() || !drop_location.trim()) {
+            return res.status(404).json({ error: "All field is Required!" });
+        }
+
+        // find all station data
+        const walletData = await wallets.findById({ owner_id: userID });
+        const ticketData = await tickets.findById({ _id: ticketId });
+
+        // Fund check
+        if (!walletData || walletData?.fund < ticketData?.ticket_price) {
+            return res.status(400).json({ message: "Insufficient funds!" });
+        } else {
+            // user wallet fund update
+            const walletData = await wallets.findByIdAndUpdate({ owner_id: userID }, {
+                fund: walletData?.fund - ticketData?.ticket_price
+            });
+
+            if (walletData) {
+                const totalFundData = await banks.findById({ ticket_id: ticketId });
+
+
+                let total_fund = totalFundData ? totalFundData?.total_fund + ticketData?.ticket_price : ticketData?.ticket_price;
+
+                const addFund = await banks.findByIdAndUpdate({ ticket_id: ticketId }, {
+                    ticket_id: ticketId,
+                    trip_name: ticketData?.trip_name,
+                    total_fund: total_fund,
+                });
+
+                if (addFund) {
+                    // create new booking
+                    const newBookings = await new bookings({
+                        ticket_id: ticketId,
+                        trip_name: ticketData?.trip_name,
+                        passenger_fares: ticketData?.ticket_price,
+                        passenger_name,
+                        seat_number,
+                        passenger_phone,
+                        passenger_email,
+                        pickup_location,
+                        drop_location
+                    }).save();
+
+                    // Ticket Data update
+                    let available_seat = ticketData?.available_seat?.filter(item => item !== seat_number);
+
+                    let booked_seat = [...ticketData?.booked_seat, seat_number];
+
+                    const ticketDataUpdate = await tickets.findByIdAndUpdate({ _id: ticketId }, {
+                        available_seat,
+                        booked_seat
+                    });
+
+                    // station data send as a response
+                    if (newBookings || ticketDataUpdate) {
+                        return res.status(201).json(newBookings);
+                    }
+                }
+
+
+            } else {
+                return res.status(400).json({ message: "something went worn!" });
+            }
         }
 
 

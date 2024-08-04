@@ -84,7 +84,7 @@ exports.DeleteTrainInfo = async (req, res) => {
         const { trainId } = req.params;
 
         // Delete train
-        const deleteTrain = await trains.findByIdAndDelete(trainId);
+        const deleteTrain = await trains.findByIdAndDelete({_id: trainId});
 
         // Send response
         if (deleteTrain) {

@@ -54,9 +54,18 @@ const bookingSchema = new mongoose.Schema({
         type: String,
         trim: true,
     },
+    pickup_location: {
+        type: String,
+        trim: true,
+    },
+    drop_location: {
+        type: String,
+        trim: true,
+    },
     booking_date: {
         type: String,
         trim: true,
+        default: Date.now,
     },
 }, {
     timestamps: true,

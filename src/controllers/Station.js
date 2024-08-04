@@ -99,7 +99,7 @@ exports.UpdateStation = async (req, res) => {
         if (helpline_phoneNumber) updateObject.helpline_phoneNumber = helpline_phoneNumber;
 
         // find all station data and update
-        const updateStationsData = await stations.findByIdAndUpdate(stationId, updateObject, {
+        const updateStationsData = await stations.findByIdAndUpdate({ _id: stationId }, updateObject, {
             new: true
         });
 
@@ -118,9 +118,9 @@ exports.UpdateStation = async (req, res) => {
 exports.DeleteStudent = async (req, res) => {
     try {
         const { stationId } = req.params;
-        
+
         // find all station data
-        const stationsData = await stations.findByIdAndDelete({_id: stationId});
+        const stationsData = await stations.findByIdAndDelete({ _id: stationId });
 
         // station data send as a response
         if (stationsData) {

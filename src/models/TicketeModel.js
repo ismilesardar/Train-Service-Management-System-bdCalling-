@@ -58,6 +58,7 @@ const ticketSchema = new mongoose.Schema({
         type: Date,
         trim: true,
         required: true,
+        default: Date.now,
     },
     total_seat: {
         type: Array,

@@ -13,7 +13,7 @@ const { CreateUser, GetUserInfo, LoginUser, TokenVerify, UpdateUserInfo, MailSen
 const { CreateStation, StationsInfo, AllStationData, UpdateStation, DeleteStudent } = require('../controllers/Station');
 const { CreateTrain, UpdateTrainInfo, DeleteTrainInfo, GetTrainData, SingleTrainData } = require('../controllers/Train');
 const { CreateWallet, FundAdd, RetrievingFund } = require('../controllers/Wallet');
-const { TripCreate, UpdateTickets, DeleteTickets } = require('../controllers/Ticket');
+const { TripCreate, UpdateTickets, DeleteTickets, AllTicketsDate, TicketDate } = require('../controllers/Ticket');
 
 
 // User Management
@@ -46,6 +46,8 @@ router.post('/fun-retrieving/:owner_id', isSigning, RetrievingFund);
 
 // Ticketing System
 router.post('/create-ticket', isSigning, isAdmin, TripCreate);
+router.get('/tickets', isSigning, isAdmin, AllTicketsDate);
+router.get('/single/ticket/:ticketId', isSigning, isAdmin, TicketDate);
 router.put('/update-ticket/:ticketId', isSigning, isAdmin, UpdateTickets);
 router.delete('/delete-ticket/:ticketId', isSigning, isAdmin, DeleteTickets);
 

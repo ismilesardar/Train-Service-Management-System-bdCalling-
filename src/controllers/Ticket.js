@@ -108,6 +108,44 @@ exports.UpdateTickets = async (req, res) => {
     }
 }
 
+exports.AllTicketsDate = async (req, res) => {
+    try {
+        // find all station data
+        const ticketsData = await tickets.find();
+
+        // station data send as a response
+        if (ticketsData) {
+            res.status(200).json(ticketsData);
+        }
+
+
+    } catch (error) {
+        return res.status(400).json({
+            message: "something went worn!",
+        });
+    }
+}
+
+exports.TicketDate = async (req, res) => {
+    try {
+        const { ticketId } = req.params;
+
+        // find all station data
+        const ticketsData = await tickets.findById({ _id: ticketId });
+
+        // station data send as a response
+        if (ticketsData) {
+            res.status(200).json(ticketsData);
+        }
+
+
+    } catch (error) {
+        return res.status(400).json({
+            message: "something went worn!",
+        });
+    }
+}
+
 exports.DeleteTickets = async (req, res) => {
     try {
         const { ticketId } = req.params;

@@ -5,6 +5,7 @@
  */
 
 const tickets = require("../models/TicketeModel");
+const banks = require("../models/MoneyReceiveModel");
 
 exports.TripCreate = async (req, res) => {
     try {
@@ -156,6 +157,26 @@ exports.DeleteTickets = async (req, res) => {
         // station data send as a response
         if (ticketsData) {
             res.status(200).json(ticketsData);
+        }
+
+
+    } catch (error) {
+        return res.status(400).json({
+            message: "something went worn!",
+        });
+    }
+}
+
+exports.CalculatingFares = async (req, res) => {
+    try {
+        const { ticket_id } = req.params;
+
+        // find all station data
+        const totalFund = await banks.findById({ ticket_id });
+
+        // station data send as a response
+        if (totalFund) {
+            res.status(200).json(totalFund);
         }
 
 

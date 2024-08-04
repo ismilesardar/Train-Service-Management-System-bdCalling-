@@ -167,7 +167,7 @@ exports.UpdateUserInfo = async (req, res) => {
         if (fund) updateObject.fund = fund;
 
         // Update user info
-        const userInfo = await users.findByIdAndUpdate(userId, updateObject, {
+        const userInfo = await users.findByIdAndUpdate({ _id: userId }, updateObject, {
             new: true
         }).select("-password");
 

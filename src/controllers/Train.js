@@ -62,7 +62,7 @@ exports.UpdateTrainInfo = async (req, res) => {
         if (bogie) updateObject.bogie = bogie;
 
         // create new train
-        const newTrain = await trains.findByIdAndUpdate(trainId, updateObject, {
+        const newTrain = await trains.findByIdAndUpdate({ _id: trainId }, updateObject, {
             new: true
         });
 

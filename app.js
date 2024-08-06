@@ -63,7 +63,7 @@ app.use("*", (req, res) => {
 
 // Mongo DB Database Connection
 mongoose
-  .connect(process.env.URL)
+  .connect(process.env.DATABASE_URL)
   .then(() => {
     console.log("Database Connected Success");
   })
